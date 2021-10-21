@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<body>
+		<div class="main">
+			<div class="header">
+				<div class="logo">ToDoList</div>
+				<input type="text" id="input" placeholder="请输入待办事项">
+			</div>
+			<div class="doing todo">
+				<h3>
+					<span class="title">正在进行</span>
+					<span class="num">0</span>
+				</h3>
+				<div class="List">
+					<!-- <input type="checkbox">
+					<div class="content">吃饭</div>
+					<div class="del">删除</div>	 -->
+				</div>
+			</div>
+			<div class="done todo">
+				<h3><span class="title">已完成</span><span class="num">0</span></h3>
+				<div class="List">	
+					<!-- <input type="checkbox" checked="checked">
+					<div class="content"></div>
+					<div class="del">删除</div>	 -->
+				</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+
+			
+		</script>
+		<script src="js/fzs.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			// 设定一个全局变量，用来存储输入的代办事项
+			if(localStorage.todoList==undefined){
+				var todoList = [];	
+			}else{
+				var todoList = JSON.parse(localStorage.todoList)
+			}
+			
+			// 获取input对象
+			var inputDom = document.querySelector('#input')
+			// 获取doing list对象
+			var doingDomDiv = document.querySelector('.doing .List')	
+			console.log(doingDomDiv)
+			// 获取done list对象
+			var doneDomDiv = document.querySelector('.done .List')
+			
+			var mainDomDiv = document.querySelector(".main")
+			
+			// 监听input键盘事件
+			inputDom.onkeydown = function(event){
+				if(event.key=='Enter'){
+					// 获取input的输入值
+					var value = inputDom.value;
+					var obj = {
+						content:value,
+						isDone:false
+					}
+					todoList.push(obj);
+					console.log(todoList)
+					inputDom.value = "";
+					rendering(todoList)
+				}
+			}
+
+			function rendering(todoList){
+				// 每次渲染之后存储在localStorage中
+				localStorage.todoList = JSON.stringify(todoList);
+				// 渲染之前清空内容
+				doingDomDiv.innerHTML = "";
+				doneDomDiv.innerHTML = "";
+
+				var numTrue = 0;
+				var numFalse = 0;
+				var numDoing = document.querySelector('.doing>h3>.num');
+				var numDone = document.querySelector('.done>h3>.num');
+				// num.innerHTML = todoList.length;
+				
+				todoList.forEach(function(item,index){				
+					// 创建todoList元素
+					var todoListDiv = document.createElement('div')
+					
+					todoListDiv.className = "ToDoList";	
+					
+					if(item.isDone){
+						todoListDiv.innerHTML = `
+						<input type="checkbox" checked="checked" data-index=${index}>
+						<div class="content">`+item.content+`</div>
+						<div class="del" data-index=${index}>删除</div>					
+						`
+						// 将todoListDiv添加到done list中
+						doneDomDiv.appendChild(todoListDiv)
+						numTrue ++;
+
+						numDone.innerHTML = numTrue
+					}else{
+						todoListDiv.innerHTML = `
+						<input type="checkbox" data-index=${index}>
+						<div class="content">`+item.content+`</div>
+						<div class="del" data-index=${index}>删除</div>					
+						`
+						// 将todoListDiv添加到doing list中
+						doingDomDiv.appendChild(todoListDiv)
+						numFalse ++;
+						console.log(numFalse)
+						console.log(numDoing)
+						numDoing.innerHTML = numFalse
+					}
+					
+				})
+
+							
+			}
+			// 通过对doingDomDiv父元素代理，监听onchange事件
+			doingDomDiv.onchange = function(event){
+				console.log(125,event)
+				var index = parseInt(event.target.dataset.index);
+				console.log(todoList[index].isDone)
+				todoList[index].isDone = true;
+				rendering(todoList);
+			}
+			
+			doneDomDiv.onchange = function(event){
+				console.log(event)
+				var index = parseInt(event.target.dataset.index);
+				console.log(todoList[index].isDone)
+				todoList[index].isDone = false;
+				rendering(todoList);
+			}
+			
+			// 监听main标签，当点击目标类名为'del'时，按照类，通过splice删除
+			mainDomDiv.onclick = function(e){
+				//console.log(e)
+				if(e.target.className=='del'){
+					var index = parseInt(e.target.dataset.index);
+					todoList.splice(index,1)
+					console.log(e)
+					rendering(todoList);
+				}
+			}
+			
+			console.log(todoList)
+			rendering(todoList);
+			
+		</script>
+	</body>
+</html>

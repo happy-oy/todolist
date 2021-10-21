@@ -1,0 +1,97 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.main{
+	width: 3.75rem;
+	height: 100vh;
+	min-height: 667px;
+	background: #CDCDCD;
+	font-size: .16rem;
+}
+.header{
+	width: 100%;
+	height: .5rem;
+	display: flex;
+	justify-content: space-between;
+	background: #333;
+	align-items: center;
+}
+.header .logo{
+	font-size: .25rem;
+	color: #DDD;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	line-height: .5rem;
+	width: 1rem;
+	margin: 0 .1rem;
+}
+.header input{
+	width: 2rem;
+	height: .3rem;
+	font-size: .15rem;
+	margin: 0 .1rem;
+	text-indent: .1rem;
+	border-radius: 0.05rem;
+	border: none;
+	outline: none;
+}
+
+.todo h3{
+	height: .32rem;
+	display: flex;
+	justify-content: space-between;
+	margin: .2rem .15rem;
+}
+.todo h3 .title{
+	font-size: .23rem;
+}
+.todo h3 .num {
+	font-size: .16rem;
+}
+.todo .List{
+	padding: 0 .1rem;
+}
+.todo .ToDoList{
+	display: flex;
+	align-items: center;
+	height: .32rem;
+	line-height: .32rem;
+	background: #fff;
+	border-radius: .04rem;
+	border-left: .05rem solid #629A9C;
+	margin: .1rem 0;
+}
+.todo .ToDoList>input{
+	width: .2rem;
+	height: .2rem;
+	margin:0 .15rem;
+}
+.todo .ToDoList>.content{
+	flex: 1;
+}
+.todo .ToDoList>.del{
+	width: .5rem;
+	height: .2rem;
+	color: #fff;
+	line-height: .2rem;
+	background-color: #9a1919cf;
+	border-radius: .05rem;
+	text-align: center;
+	font-size: .14rem;
+	margin: 0 .1rem;
+}
+.todo.done .ToDoList{
+	-webkit-filter: grayscale(1);
+	opacity: .7;
+}
+
+.pc {
+	font-size: 100px !important;
+}
+.pc .main{
+	height: 100%;
+	padding-bottom: 1rem;
+	margin: 0 auto;
+}
